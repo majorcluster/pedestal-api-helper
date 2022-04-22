@@ -1,4 +1,4 @@
-(defproject org.clojars.majorcluster/pedestal-api-helper "0.1.2"
+(defproject org.clojars.majorcluster/pedestal-api-helper "0.2.0"
   :description "Useful simple tools to be used for pedestal APIs"
   :url "https://github.com/mtsbarbosa/pedestal-api-helper"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"

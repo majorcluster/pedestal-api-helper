@@ -51,10 +51,12 @@ A Clojure library designed to extend usual pedestal api setup, providing:
           mandatory-fields ["id","name"]
           allowed-fields ["id","name"]
           body (r.params/validate-and-mop!! crude-body mandatory-fields allowed-fields)]
-      (...)
+      {:status 400, :headers common-headers, :body {:message
+                                                    (:validation-messages (.getData e))}}
       {:status 204})
     (catch ExceptionInfo e
-      (...))
+      {:status 400, :headers common-headers, :body {:message
+                                                    (:validation-messages (.getData e))}})
     ))
 ```
 

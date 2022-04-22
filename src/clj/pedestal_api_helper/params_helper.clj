@@ -23,15 +23,15 @@
           not-present (filter (fn [field]
                                 (not (contains? body field))) fields)
           not-present-messages (map (fn [field]
-                                      (format message-untranslated field))
-                                    not-present)
-          not-present-message (apply str not-present-messages)]
+                                      {:field (name field)
+                                       :message (format message-untranslated field)})
+                                    not-present)]
       (cond (empty? not-present) true
             :else ((throw (ex-info "Mandatory fields validation failed" {:type :bad-format
-                                                                         :message not-present-message}))
+                                                                         :validation-messages not-present-messages}))
                    ))))
   ([body fields]
-   (validate-mandatory body fields "Field %s is not present. ")))
+   (validate-mandatory body fields "Field %s is not present")))
 
 (defn extract-field-value
   [field body]
