@@ -10,7 +10,7 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 
 * Add the dependency: 
 ```clojure
-[org.clojars.majorcluster/pedestal-api-helper "0.1.2"]
+[org.clojars.majorcluster/pedestal-api-helper "0.2.0"]
 ```
 
 ### Examples:
@@ -58,6 +58,16 @@ A Clojure library designed to extend usual pedestal api setup, providing:
       {:status 400, :headers common-headers, :body {:message
                                                     (:validation-messages (.getData e))}})
     ))
+```
+
+## Publish
+### Requirements
+* Leiningen (of course 😄) 
+* GPG (mac => brew install gpg)
+* Clojars account
+* Enter clojars/tokens page in your account -> generate one and use for password
+```shell
+export GPG_TTY=$(tty) && lein deploy clojars
 ```
 
 
