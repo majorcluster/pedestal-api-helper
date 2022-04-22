@@ -53,9 +53,8 @@
     cleaned))
 
 (defn validate-and-mop!!
-  [request
-   body
+  [body
    mandatory
    accepted]
-  (validate-mandatory request body mandatory)
+  (validate-mandatory body mandatory)
   (mop-fields body accepted))
