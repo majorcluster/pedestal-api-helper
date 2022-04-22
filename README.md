@@ -4,11 +4,13 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 * useful interceptors
 * useful utils for dealing with validation and filtering, for example
 
+[Clojars link](https://clojars.org/org.clojars.majorcluster/pedestal-api-helper)
+
 ## Usage
 
 * Add the dependency: 
 ```clojure
-[org.clojars.majorcluster/pedestal-api-helper "0.1.0"]
+[org.clojars.majorcluster/pedestal-api-helper "0.1.2"]
 ```
 
 ### Examples:
