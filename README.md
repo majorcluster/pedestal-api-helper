@@ -75,7 +75,7 @@ export GPG_TTY=$(tty) && lein deploy clojars
 ### pedestal-api-helper/interceptors
 | Symbols     | Description |
 | ----------- | ----------- |
-| json-out    |    Map having :leave as fn[context] and rewriting map response into json    |
+| json-out    |    Map having :leave as fn[context] and rewriting response body from map into json    |
 
 ### pedestal-api-helper/params-helper
 | Symbols     | Description |
