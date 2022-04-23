@@ -84,10 +84,10 @@ export GPG_TTY=$(tty) && lein deploy clojars
 
 | Functions     | Description |
 | ----------- | ----------- |
-| uuid | returns a new random UUID |
-| uuid-as-string [uuid] | converts uuid into a string |
-| is-uuid [id] | if id param is a string, checks if it matches uuid regex, otherwise returns false |
-| validate-mandatory [body fields & message-untranslated = "Field %s is not present"] | checks if body map has mandatory keys, if not, throws an exception containing all missing fields in ExceptionInfo .getData :validation-messages |
-| extract-field-value [field body] | gets value from the body using field ks, converting uuid's from string to UUID if needed |
-| mop-fields [body fields] | Clean the body removing values not present in fields param |
-| validate-and-mop!! [body mandatory accepted] | Validates and clean body by executing validate-mandatory and mop-fields |
+| uuid | returns a new random UUID <br> ``` (uuid) => 53bd29d3-9b41-4550-83cc-f970d49da04d```|
+| uuid-as-string [uuid] | converts uuid into a string <br> ``` (uuid-as-string (uuid)) => "53bd29d3-9b41-4550-83cc-f970d49da04d"```|
+| is-uuid [id] | if id param is a string, checks if it matches uuid regex, otherwise returns false <br> ```(is-uuid "53bd29d3-9b41-4550-83cc-f970d49da04d") => true```|
+| validate-mandatory [body fields & message-untranslated = "Field %s is not present"] | checks if body map has mandatory keys, if not, throws an exception containing all missing fields in ExceptionInfo .getData :validation-messages <br> `(validate-mandatory {:name "Rosa"} ["name"]) => true` <br> `(validate-mandatory {} ["name"]) => ExceptionInfo thrown`|
+| extract-field-value [field body] | gets value from the body using field ks, converting uuid's from string to UUID if needed <br> `(extract-field-value :name {:name "Rosa"}) => "Rosa"` <br> `(extract-field-value :id {:id "53bd29d3-9b41-4550-83cc-f970d49da04d"}) => #uuid "53bd29d3-9b41-4550-83cc-f970d49da04d"`|
+| mop-fields [body fields] | Clean the body removing values not present in fields param <br> `(mop-fields {:name "Rosa" :age 41} ["name"]) => {:name "Rosa"}`|
+| validate-and-mop!! [body mandatory accepted] | Validates and clean body by executing **validate-mandatory** and **mop-fields** |
