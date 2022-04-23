@@ -10,7 +10,7 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 
 * Add the dependency: 
 ```clojure
-[org.clojars.majorcluster/pedestal-api-helper "0.2.0"]
+[org.clojars.majorcluster/pedestal-api-helper "0.3.0"]
 ```
 
 ### Examples:
@@ -69,6 +69,26 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 export GPG_TTY=$(tty) && lein deploy clojars
 ```
 
+## Documentation
+### pedestal-api-helper/interceptors
+| Symbols     | Description |
+| ----------- | ----------- |
+| json-out    |    Map having :leave as fn[context] and rewriting map response into json    |
+
+### pedestal-api-helper/params-helper
+| Symbols     | Description |
+| ----------- | ----------- |
+| uuid-pattern | UUID string regex |
+
+| Functions     | Description |
+| ----------- | ----------- |
+| uuid | returns a new random UUID |
+| uuid-as-string [uuid] | converts uuid into a string |
+| is-uuid [id] | if id param is a string, checks if it matches uuid regex, otherwise returns false |
+| validate-mandatory [body fields & message-untranslated = "Field %s is not present"] | checks if body map has mandatory keys, if not, throws an exception containing all missing fields in ExceptionInfo .getData :validation-messages |
+| extract-field-value [field body] | gets value from the body using field ks, converting uuid's from string to UUID if needed |
+| mop-fields [body fields] | Clean the body removing values not present in fields param |
+| validate-and-mop!! [body mandatory accepted] | Validates and clean body by executing validate-mandatory and mop-fields |
 
 ## License
 
