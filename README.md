@@ -21,7 +21,7 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 
 (def common-interceptors
   [(p.body-params/body-params)
-   interceptors/json-out])
+   api-h.i/json-out])
 
 (def all-routes
   (route/expand-routes
