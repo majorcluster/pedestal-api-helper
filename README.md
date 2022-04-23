@@ -1,5 +1,7 @@
 # pedestal-api-helper
 
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.majorcluster/pedestal-api-helper.svg)](https://clojars.org/org.clojars.majorcluster/pedestal-api-helper)
+
 A Clojure library designed to extend usual pedestal api setup, providing: 
 * useful interceptors
 * useful utils for dealing with validation and filtering, for example
