@@ -12,7 +12,7 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 
 * Add the dependency: 
 ```clojure
-[org.clojars.majorcluster/pedestal-api-helper "0.3.0"]
+[org.clojars.majorcluster/pedestal-api-helper "LAST RELEASE NUMBER"]
 ```
 
 ### Examples:
