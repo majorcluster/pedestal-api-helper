@@ -1,4 +1,5 @@
 (ns pedestal-api-helper.params-helper
+  (:require [pedestal-api-helper.validation :as v])
   (:import (java.util UUID)))
 
 (def uuid-pattern
@@ -18,22 +19,29 @@
         :else false))
 
 (defn validate-mandatory
+  "validates mandatory fields <br>
+  - *body* ^map: the body map where key-values will be checked and/or removed
+  - *fields* ^coll: [\"field-0-name\",\"field-n-name\"]
+  - & *field-message* ^string: Default field message"
   ([body fields message-untranslated]
-    (let [fields (map #(keyword %) fields)
-          not-present (filter (fn [field]
-                                (not (contains? body field))) fields)
-          not-present-messages (map (fn [field]
-                                      {:field (name field)
-                                       :message (format message-untranslated field)})
-                                    not-present)]
-      (cond (empty? not-present) true
-            :else ((throw (ex-info "Mandatory fields validation failed" {:type :bad-format
-                                                                         :validation-messages not-present-messages}))
-                   ))))
+   (let [fields (map #(keyword %) fields)
+         not-present (filter (fn [field]
+                               (not (contains? body field))) fields)
+         not-present-messages (map (fn [field]
+                                     {:field   (name field)
+                                      :message (format message-untranslated field)})
+                                   not-present)]
+     (cond (empty? not-present) true
+           :else ((throw (ex-info "Mandatory fields validation failed" {:type                :bad-format
+                                                                        :validation-messages not-present-messages}))
+                  ))))
   ([body fields]
    (validate-mandatory body fields "Field %s is not present")))
 
 (defn extract-field-value
+  "extract field value, by converting string into other objects, uuid is the only conversion so far <br>
+  - *field* ^ks: ks (field) to be extracted from *body*
+  - *body* ^map: the body map where key-values will be extracted"
   [field body]
   (let [value (field body)
         is-uuid (is-uuid value)]
@@ -41,6 +49,9 @@
           :else value)))
 
 (defn mop-fields
+  "mop fields, removing unwanted key-values <br>
+  - *body* ^map: the body map where key-values will be checked and/or removed
+  - *fields* ^coll: [\"field-0-name\",\"field-n-name\"] => accepted fields, the other ones will be removed"
   [body fields]
   (let [fields (map #(keyword %) fields)
         cleaned (reduce (fn [map field]
@@ -53,14 +64,27 @@
     cleaned))
 
 (defn validate-and-mop!!
+  "validates fields and mop then, removing unwanted key-values <br>
+  - *body* ^map: the body map where key-values will be checked and/or removed
+  - *to-validate* ^map: {\"field-name\"
+  [{:validate/type :validate/mandatory & :validate/message \"%s is ...\"},\n  <br>
+  {:validate/type :validate/min, :validate/value 12 & :validate/message \"% is mandatory\"},\n  <br>
+  {:validate/type :validate/max, :validate/value 40 & :validate/message \"% is ...\"},\n  <br>
+  {:validate/type :validate/regex, :validate/value #\"^[\\d]{1,2}$\" & :validate/message \"% is ...\"},\n  <br>
+  {:validate/type :validate/custom, :validate/value fn & :validate/message \"% is ...\"}]}
+  - *to-validate* ^coll: [\"field-0-name\",\"field-n-name\"] => validates only mandatoryness.
+  - *accepted* ^coll: [\"field-0-name\",\"field-n-name\"] => accepted fields, the other ones will be removed
+  - & *field-message* ^string: Default field message, is used just if to-validate is coll"
   ([body
-    mandatory
+    to-validate
     accepted
     field-message]
-   (validate-mandatory body mandatory field-message)
+   (cond (map? to-validate) (v/validate body to-validate)
+         :else (validate-mandatory body to-validate field-message))
    (mop-fields body accepted))
   ([body
-    mandatory
+    to-validate
     accepted]
-   (validate-mandatory body mandatory)
+   (cond (map? to-validate) (v/validate body to-validate)
+         :else (validate-mandatory body to-validate))
    (mop-fields body accepted)))
