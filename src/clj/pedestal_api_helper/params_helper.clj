@@ -6,23 +6,23 @@
   #"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
 (defn uuid
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   []
   (UUID/randomUUID))
 
 (defn uuid-as-string
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [uuid]
   (.toString uuid))
 
 (defn is-uuid
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [id]
   (cond (string? id) (re-matches uuid-pattern id)
         :else false))
 
 (defn validate-mandatory
-  "validates mandatory fields <br>
-  - *body* ^map: the body map where key-values will be checked and/or removed
-  - *fields* ^coll: [\"field-0-name\",\"field-n-name\"]
-  - & *field-message* ^string: Default field message"
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body fields message-untranslated]
    (let [fields (map #(keyword %) fields)
          not-present (filter (fn [field]
@@ -39,9 +39,7 @@
    (validate-mandatory body fields "Field %s is not present")))
 
 (defn extract-field-value
-  "extract field value, by converting string into other objects, uuid is the only conversion so far <br>
-  - *field* ^ks: ks (field) to be extracted from *body*
-  - *body* ^map: the body map where key-values will be extracted"
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [field body]
   (let [value (field body)
         is-uuid (is-uuid value)]
@@ -49,9 +47,7 @@
           :else value)))
 
 (defn mop-fields
-  "mop fields, removing unwanted key-values <br>
-  - *body* ^map: the body map where key-values will be checked and/or removed
-  - *fields* ^coll: [\"field-0-name\",\"field-n-name\"] => accepted fields, the other ones will be removed"
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [body fields]
   (let [fields (map #(keyword %) fields)
         cleaned (reduce (fn [map field]
@@ -64,17 +60,7 @@
     cleaned))
 
 (defn validate-and-mop!!
-  "validates fields and mop then, removing unwanted key-values <br>
-  - *body* ^map: the body map where key-values will be checked and/or removed
-  - *to-validate* ^map: {\"field-name\"
-  [{:validate/type :validate/mandatory & :validate/message \"%s is ...\"},\n  <br>
-  {:validate/type :validate/min, :validate/value 12 & :validate/message \"% is mandatory\"},\n  <br>
-  {:validate/type :validate/max, :validate/value 40 & :validate/message \"% is ...\"},\n  <br>
-  {:validate/type :validate/regex, :validate/value #\"^[\\d]{1,2}$\" & :validate/message \"% is ...\"},\n  <br>
-  {:validate/type :validate/custom, :validate/value fn & :validate/message \"% is ...\"}]}
-  - *to-validate* ^coll: [\"field-0-name\",\"field-n-name\"] => validates only mandatoryness.
-  - *accepted* ^coll: [\"field-0-name\",\"field-n-name\"] => accepted fields, the other ones will be removed
-  - & *field-message* ^string: Default field message, is used just if to-validate is coll"
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body
     to-validate
     accepted

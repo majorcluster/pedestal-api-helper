@@ -108,14 +108,7 @@
         :else result))
 
 (defn validate
-  "validates fields <br>
-  - *body* ^map: the body map where key-values will be checked and/or removed
-  - *fields* ^map: <br>
-  {\"field-name\" [{:validate/type :validate/mandatory & :validate/message \"%s is ...\"},
-  <br> {:validate/type :validate/min, :validate/value 12 & :validate/message \"% is mandatory\"},
-  <br> {:validate/type :validate/max, :validate/value 40 & :validate/message \"% is ...\"},
-  <br> {:validate/type :validate/regex, :validate/value #\"^[\\d]{1,2}$\" & :validate/message \"% is ...\"},
-  <br> {:validate/type :validate/custom, :validate/value fn & :validate/message \"% is ...\"}]}"
+  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/validation.md)"
   [body fields]
   (let [body (cond (nil? body) {}
                    :else body)
