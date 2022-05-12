@@ -15,13 +15,13 @@
 ## Definitions
 Patterns for some maps passed to the functions as arguments:
 - <h3><a id='validation-def'></a><span style="color:coral">validation-def</span> ^map</h3><br>
-  - | key              | value                  | description                                              | mandatory extra key      | optional extra key                                                                 |
-    | -----------------| -----------------------| -------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------- |
-    | `:validate/type` | `:validate/mandatory`  | validates if field is present                            | -                        | `:validate/message` ^string with %s being field name                               |
-    | `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value      |
-    | `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value      |
-    | `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name                               |
-    | `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name                               |
+| key              | value                  | description                                              | mandatory extra key      | optional extra key                                                                 |
+| -----------------| -----------------------| -------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------- |
+| `:validate/type` | `:validate/mandatory`  | validates if field is present                            | -                        | `:validate/message` ^string with %s being field name                               |
+| `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value      |
+| `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value      |
+| `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name                               |
+| `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name                               |
   - Examples:
   ```clojure
     {"field-name"
@@ -42,74 +42,74 @@ Patterns for some maps passed to the functions as arguments:
 - <h3><a id='extract-field-value'></a><span style="color:green">extract-field-value</span> [field body]<br></h3>
   gets value from the body using field ks, converting uuid's from string to UUID if needed <br>
   <br>
-  - *field* ^ks : field to be extracted from a map
-  - *body* ^map : map where the `field` will be extracted
-  - **returns** *?* : any value from the map
-  ```clojure
+  - field ^ks : field to be extracted from a map <br>
+  - body ^map : map where the field will be extracted <br>
+  - returns ? : any value from the map <br>
+```clojure
     (extract-field-value :name {:name "Rosa"})
     ;=> "Rosa"
-  ```
-  ```clojure
+```
+```clojure
     (extract-field-value :id {:id "53bd29d3-9b41-4550-83cc-f970d49da04d"}) 
     ;=> #uuid "53bd29d3-9b41-4550-83cc-f970d49da04d"
-  ```
+```
 
 - <h3><a id='is-uuid'></a><span style="color:green">is-uuid</span> [id]<br></h3>
   if id param is a string, checks if it matches uuid regex, otherwise returns false <br>
   <br>
-  - *id* ^string : string to be checked against [uuid pattern](#uuid-pattern)
-  - **returns** *^boolean* : if is a string and an uuid or not
-  ```clojure
+  - id ^string : string to be checked against [uuid pattern](#uuid-pattern) <br>
+  - returns ^boolean : if is a string and an uuid or not <br>
+```clojure
     (is-uuid "53bd29d3-9b41-4550-83cc-f970d49da04d") ;=> true
-  ```
+```
 
 - <h3><a id='mop-fields'></a><span style="color:green">mop-fields</span> [body fields]<br></h3>
   Clean the body removing values not present in fields param <br>
   <br>
-  - *body* ^map : map to be cleaned
-  - *fields* [^string]: string collection with the name of the allowed fields in the map
-  - **returns** *^map* : cleaned map
-  ```clojure
+  - body ^map : map to be cleaned <br>
+  - fields [^string]: string collection with the name of the allowed fields in the map <br>
+  - **returns** *^map* : cleaned map <br>
+```clojure
     (mop-fields {:name "Rosa" :age 41} ["name"]) 
     ;=> {:name "Rosa"} 
-  ```
+```
 
 - <h3><a id='uuid'></a><span style="color:green">uuid</span><br></h3>
   returns a new random UUID <br>
   <br>
-  - **returns** *^uuid* : a random uuid
-  ```clojure
+  - returns ^uuid : a random uuid <br>
+```clojure
     (uuid) ;=> #uuid "53bd29d3-9b41-4550-83cc-f970d49da04d"
-  ```
+```
 - <h3><a id='uuid-as-string'></a><span style="color:green">uuid-as-string</span> [uuid]<br></h3>
   converts uuid into a string <br>
   <br>
-  - *uuid* ^uuid : uuid to be converted to string
-  - **returns** *^string* : uuid as a string
-  ```clojure
+  - uuid ^uuid : uuid to be converted to string <br>
+  - returns ^string : uuid as a string <br>
+```clojure
     (uuid-as-string (uuid)) ;=> "53bd29d3-9b41-4550-83cc-f970d49da04d"
-  ```
+```
 
 - <h3><a id='validate-and-mop!!'></a><span style="color:green">validate-and-mop!!</span> [body mandatory accepted & field-message = "Field %s is not present"]<br></h3>
   Validates and clean body by executing [validate-mandatory](#validate-mandatory) and `mop-fields` <br>
   <br>
-  - *body* ^uuid : uuid to be converted to string
-  - *mandatory* [^string] | [^validation-def](#validation-def) : either coll of strings or map following [^validation-def](#validation-def) specs. For coll of strings, mandatory validation is triggered by default, other validations require the map
-  - *accepted* [^string] : collection of strings having accepted keys on body, the others will be removed
-  - *field-message* ^string? : optional argument to customize message, used only when mandatory argument is coll of strings 
-  - **returns** *^map* : filtered and validated body
-  - **throws** *^ExceptionInfo* : exception info with data having bad format type and validation-messages for each field
-  ```clojure
+  - body ^uuid : uuid to be converted to string <br>
+  - mandatory [^string] | [^validation-def](#validation-def) : either coll of strings or map following [^validation-def](#validation-def) specs. For coll of strings, mandatory validation is triggered by default, other validations require the map <br>
+  - accepted [^string] : collection of strings having accepted keys on body, the others will be removed <br>
+  - field-message ^string? : optional argument to customize message, used only when mandatory argument is coll of strings  <br>
+  - returns ^map : filtered and validated body <br>
+  - throws ^ExceptionInfo : exception info with data having bad format type and validation-messages for each field <br>
+```clojure
    (validate-and-mop!! {:name "Rosa" :extra 6} ["name"] ["name"])
    ;=> {:name "Rosa"}
-  ```
-  ```clojure
+```
+```clojure
    (validate-and-mop!! {:name "Rosa"} ["age"] ["name" "age"])
    ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
    ;                                               :validation-messages [{:field "age"
    ;                                                                      :message "Field :age is not present"}]}}
-  ```
-  ```clojure
+```
+```clojure
    (validate-and-mop!! 
         {:name "Rosa" :age 17}
         {"age" [{:validate/type :validate/min, :validate/value 18}]}
@@ -117,29 +117,29 @@ Patterns for some maps passed to the functions as arguments:
    ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
    ;                                               :validation-messages [{:field "age"
    ;                                                                      :message "Field age must have a minimum size of 18"}]}}
-  ```
+```
 
 - <h3><a id='validate-mandatory'></a><span style="color:green">validate-mandatory</span> [body fields & message-untranslated = "Field %s is not present"]<br></h3>
   checks if body map has mandatory keys, if not, throws an exception containing all missing fields in `ExceptionInfo` `.getData :validation-messages` <br>
   <br>
-  - *body* ^uuid : uuid to be converted to string
-  - *fields* [^string] : coll of strings being the mandatory keys for the body 
-  - *message-untranslated* ^string? : optional argument to customize message, used only when mandatory argument is coll of strings
-  - **returns** *^boolean* : true when validation succeeds
-  - **throws** *^ExceptionInfo* : exception info with data having bad format type and validation-messages for each field
-  ```clojure
+  - body ^uuid : uuid to be converted to string <br>
+  - fields [^string] : coll of strings being the mandatory keys for the body  <br>
+  - message-untranslated* ^string? : optional argument to customize message, used only when mandatory argument is coll of strings <br>
+  - returns ^boolean : true when validation succeeds <br>
+  - throws ^ExceptionInfo : exception info with data having bad format type and validation-messages for each field <br>
+```clojure
     (validate-mandatory {:name "Rosa"} ["name"]) 
     ;=> true
-  ```
-  ```clojure
+```
+```clojure
     (validate-mandatory {} ["name"]) 
     ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
     ;                                               :validation-messages [{:field "name"
     ;                                                                      :message "Field :name is not present"}]}}
-  ```
-  ```clojure
+```
+```clojure
     (validate-mandatory {} ["name"] "Field %s has a custom message") 
     ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
     ;                                               :validation-messages [{:field "name"
     ;                                                                      :message "Field :name has a custom message"}]}}
-  ```
+```
