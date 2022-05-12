@@ -29,4 +29,4 @@ export GPG_TTY=$(tty) && lein deploy clojars
 ```
 
 ## Documentation
-[Link](https://cljdoc.org/d/org.clojars.majorcluster/pedestal-api-helper)
+[Link](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/index.md)
