@@ -50,4 +50,21 @@
            (-> {:message "Hi!"
                 :tried false}
                (exec-json-out-w-response)
+               (get-resp-body)))))
+  (testing "when json-out leaves with a collection, it is converted to json"
+    (is (= "[{\"payload\":{\"message\":\"Hi!\",\"tries\":4}}]"
+           (-> [{:payload {:message "Hi!"
+                           :tries 4}}]
+               (exec-json-out-w-response)
+               (get-resp-body))))
+    (is (= "[{\"message\":\"Hi!\",\"tries\":4},{\"message\":\"Bye!\",\"tries\":2}]"
+           (-> [{:message "Hi!"
+                :tries 4}
+                {:message "Bye!"
+                 :tries 2}]
+               (exec-json-out-w-response)
+               (get-resp-body))))
+    (is (= "[]"
+           (-> []
+               (exec-json-out-w-response)
                (get-resp-body))))))
