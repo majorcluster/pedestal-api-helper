@@ -24,7 +24,7 @@
 (defn validate-mandatory
   "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body fields message-untranslated]
-   (let [fields (map #(keyword %) fields)
+   (let [fields (map keyword fields)
          not-present (filter (fn [field]
                                (not (contains? body field))) fields)
          not-present-messages (map (fn [field]
@@ -49,15 +49,8 @@
 (defn mop-fields
   "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [body fields]
-  (let [fields (map #(keyword %) fields)
-        cleaned (reduce (fn [map field]
-                          (let [has-field? (contains? body field)
-                                value (extract-field-value field body)]
-                            (if has-field? (assoc map field value)
-                                           map)))
-                        {}
-                        fields)]
-    cleaned))
+  (let [fields (map keyword fields)]
+    (select-keys body fields)))
 
 (defn validate-and-mop!!
   "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
