@@ -87,7 +87,6 @@
                                                :message "Field :age is not present"}]}
                        (params-helper/validate-and-mop!! {:name "Lenin"} ["age"] ["age", "name"]))))
   (testing "to-validate is map and specific validations are triggered"
-    (is (= 1 0))
     (is (params-helper/validate-and-mop!! {:name "Marx" :age 46} {"name" {:validate/type :validate/mandatory}
                                                                   "age"  [{:validate/type :validate/mandatory}]} ["name" "age"]))
     (is (thrown-match? ExceptionInfo
