@@ -14,7 +14,7 @@
 
 (deftest json-out-test
   (testing "when json-out leaves with non-map response, same response returns"
-(is (= "{\"payload\":true}"
+    (is (= "{\"payload\":true}"
            (-> "{\"payload\":true}"
                (exec-json-out-w-response)
                (get-resp-body))))
