@@ -20,7 +20,7 @@
    :leave
    (fn [context]
      (->> context
-         (get-last :response)
-         (get-last :body)
-         (convert-to-json)
-         (assoc-in context [:response :body])))})
+          (get-last :response)
+          (get-last :body)
+          (convert-to-json)
+          (assoc-in context [:response :body])))})

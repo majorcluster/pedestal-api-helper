@@ -31,7 +31,14 @@ Patterns for some maps passed to the functions as arguments:
        {:validate/type :validate/regex, :validate/value #"^[\d]{1,2}$", :validate/message "%s is ..."},
        {:validate/type :validate/custom, :validate/value fn, :validate/message "% is ..."}]}
   ```
-  
+- <h3><a id='mop-fields-opts-def'></a><span style="color:coral">mop-fields opts</span> ^map</h3><br>
+  | key              | value     / default    | description                                                          |
+  | -----------------| -----------------------| -------------------------------------------------------------------- |
+  | `:ignore-uuid`   | boolean   / false      | ignores string to uuid conversion, making the algorithm a bit faster |
+  - Examples:
+  ```clojure
+    {:ignore-uuid true}
+  ```
 
 ## Symbols
 - <h3><a id='uuid-pattern'></a><span style="color:green">uuid-pattern</span><br></h3>
@@ -68,6 +75,7 @@ Patterns for some maps passed to the functions as arguments:
   <br>
   - body ^map : map to be cleaned <br>
   - fields [^string]: string collection with the name of the allowed fields in the map <br>
+  - opts [^opts-def?](#mop-fields-opts-def): optional options 
   - **returns** *^map* : cleaned map <br>
 ```clojure
     (mop-fields {:name "Rosa" :age 41} ["name"]) 

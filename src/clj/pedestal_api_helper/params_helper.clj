@@ -33,8 +33,7 @@
                                    not-present)]
      (cond (empty? not-present) true
            :else ((throw (ex-info "Mandatory fields validation failed" {:type                :bad-format
-                                                                        :validation-messages not-present-messages}))
-                  ))))
+                                                                        :validation-messages not-present-messages}))))))
   ([body fields]
    (validate-mandatory body fields "Field %s is not present")))
 
@@ -48,9 +47,19 @@
 
 (defn mop-fields
   "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
-  [body fields]
-  (let [fields (map keyword fields)]
-    (select-keys body fields)))
+  ([body fields opts]
+   (let [fields (map keyword fields)
+         ignore-uuid (get opts :ignore-uuid false)]
+     (cond ignore-uuid (->> fields
+                            (select-keys body))
+           :else (->> fields
+                      (select-keys body)
+                      (map (fn [[key value]]
+                             (cond (is-uuid value) [key (UUID/fromString value)]
+                                   :else [key value])))
+                      (into {})))))
+  ([body fields]
+   (mop-fields body fields {})))
 
 (defn validate-and-mop!!
   "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"

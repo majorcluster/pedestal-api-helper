@@ -1,5 +1,4 @@
-(ns pedestal-api-helper.validation
-  (:use clojure.pprint))
+(ns pedestal-api-helper.validation)
 
 (defn- validate-mandatory
   ([body field-name raw-message]
@@ -118,12 +117,11 @@
                                                        (conj messages (validate-by-specs spec body key)))
                                                      []
                                                      specs)))
-                          fields)
+                               fields)
         validation-result  (flatten-invalid-messages validation-result)
         not-valid-messages (map map-invalid-messages validation-result)
         not-valid-messages (into [] (filter second not-valid-messages))]
     (cond (or (nil? not-valid-messages)
               (empty? not-valid-messages)) true
           :else ((throw (ex-info "Field validation failed" {:type                :bad-format
-                                                            :validation-messages not-valid-messages}))
-                 ))))
+                                                            :validation-messages not-valid-messages}))))))

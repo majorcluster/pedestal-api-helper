@@ -1,6 +1,6 @@
 (ns clj.pedestal-api-helper.interceptors-test
   (:require [clojure.test :refer :all]
-            [pedestal-api-helper.interceptors :refer :all]))
+            [pedestal-api-helper.interceptors :as interceptors]))
 
 (defn get-resp-body
   [result]
@@ -10,11 +10,11 @@
 
 (defn exec-json-out-w-response
   [response-body]
-  ((:leave json-out) {:response {:body response-body}}))
+  ((:leave interceptors/json-out) {:response {:body response-body}}))
 
 (deftest json-out-test
   (testing "when json-out leaves with non-map response, same response returns"
-    (is (= "{\"payload\":true}"
+(is (= "{\"payload\":true}"
            (-> "{\"payload\":true}"
                (exec-json-out-w-response)
                (get-resp-body))))
@@ -43,7 +43,7 @@
                (get-resp-body))))
     (is (= "{\"message\":\"Hi!\",\"tries\":4}"
            (-> {:message "Hi!"
-                          :tries 4}
+                :tries 4}
                (exec-json-out-w-response)
                (get-resp-body))))
     (is (= "{\"message\":\"Hi!\",\"tried\":false}"
@@ -59,7 +59,7 @@
                (get-resp-body))))
     (is (= "[{\"message\":\"Hi!\",\"tries\":4},{\"message\":\"Bye!\",\"tries\":2}]"
            (-> [{:message "Hi!"
-                :tries 4}
+                 :tries 4}
                 {:message "Bye!"
                  :tries 2}]
                (exec-json-out-w-response)
