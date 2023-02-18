@@ -33,9 +33,9 @@ Patterns for some maps passed to the functions as arguments:
        {:validate/type :validate/custom, :validate/value fn, :validate/message "% is ..."}]}
   ```
 - <h3><a id='mop-fields-opts-def'></a><span style="color:coral">mop-fields opts</span> ^map</h3><br>
-  | key              | value     / default    | description                                                          |
-  | -----------------| -----------------------| -------------------------------------------------------------------- |
-  | `:ignore-uuid`   | boolean   / false      | ignores string to uuid conversion, making the algorithm a bit faster |
+| key              | value     / default    | description                                                          |
+| ---------------- | ---------------------- | -------------------------------------------------------------------- |
+| `:ignore-uuid`   | boolean   / false      | ignores string to uuid conversion, making the algorithm a bit faster |
   - Examples:
   ```clojure
     {:ignore-uuid true}
