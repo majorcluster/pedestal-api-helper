@@ -1,6 +1,7 @@
 ## Index
 - Definitions
   - [validation-def](#validation-def)
+  - [mop-fields-opts-def](#mop-fields-opts-def)
 - Symbols
   - [uuid-pattern](#uuid-pattern)
 - Functions
