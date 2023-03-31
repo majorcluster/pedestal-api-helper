@@ -6,23 +6,23 @@
   #"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
 (defn uuid
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   []
   (UUID/randomUUID))
 
 (defn uuid-as-string
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [uuid]
   (.toString uuid))
 
 (defn is-uuid
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [id]
   (cond (string? id) (re-matches uuid-pattern id)
         :else false))
 
 (defn validate-mandatory
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body fields message-untranslated]
    (let [fields (map keyword fields)
          not-present (filter (fn [field]
@@ -38,7 +38,7 @@
    (validate-mandatory body fields "Field %s is not present")))
 
 (defn extract-field-value
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   [field body]
   (let [value (field body)
         is-uuid (is-uuid value)]
@@ -46,7 +46,7 @@
           :else value)))
 
 (defn mop-fields
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body fields opts]
    (let [fields (map keyword fields)
          ignore-uuid (get opts :ignore-uuid false)]
@@ -62,7 +62,7 @@
    (mop-fields body fields {})))
 
 (defn validate-and-mop!!
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/params_helper.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/params_helper.md)"
   ([body
     to-validate
     accepted
