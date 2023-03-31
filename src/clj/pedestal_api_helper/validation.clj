@@ -107,7 +107,7 @@
         :else result))
 
 (defn validate
-  "[docs](https://github.com/mtsbarbosa/pedestal-api-helper/tree/main/doc/validation.md)"
+  "[docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/validation.md)"
   [body fields]
   (let [body (cond (nil? body) {}
                    :else body)
