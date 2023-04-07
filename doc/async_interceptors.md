@@ -1,10 +1,12 @@
-## Index
+## async-interceptors
+
+### Index
 - Functions
   - [async-blocker-interceptor](#async-blocker-interceptor)
   - [async-fetch-output-interceptor](#async-fetch-output-interceptor)
   - [async-output-interceptor](#async-output-interceptor)
 
-## Functions
+### Functions
 
 - <h3><a id='async-blocker-interceptor'></a><span style="color:green">async-blocker-interceptor</span> [] [merge-data-fn]</h3><br>
   Async blocker interceptor, the one mandatory to resolve async-channels created by `async-fetch-output-interceptor`

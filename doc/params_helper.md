@@ -1,4 +1,6 @@
-## Index
+## params-helper
+
+### Index
 - Definitions
   - [validation-def](#validation-def)
   - [mop-fields-opts-def](#mop-fields-opts-def)
@@ -13,7 +15,7 @@
   - [validate-and-mop!!](#validate-and-mop!!)
   - [validate-mandatory](#validate-mandatory)
 
-## Definitions
+### Definitions
 Patterns for some maps passed to the functions as arguments:
 - <h3><a id='validation-def'></a><span style="color:coral">validation-def</span> ^map</h3><br>
 | key              | value                  | description                                              | mandatory extra key      | optional extra key                                                                 |
@@ -41,11 +43,11 @@ Patterns for some maps passed to the functions as arguments:
     {:ignore-uuid true}
   ```
 
-## Symbols
+### Symbols
 - <h3><a id='uuid-pattern'></a><span style="color:green">uuid-pattern</span><br></h3>
   UUID string regex
 
-## Functions
+### Functions
 
 - <h3><a id='extract-field-value'></a><span style="color:green">extract-field-value</span> [field body]<br></h3>
   gets value from the body using field ks, converting uuid's from string to UUID if needed <br>

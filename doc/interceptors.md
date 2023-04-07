@@ -1,9 +1,11 @@
-## Index
+## interceptors
+
+### Index
 - Symbols
     - [json-out](#json-out)
 - Functions
 
-## Symbols
+### Symbols
 - <h3><a id='json-out'></a><span style="color:green">json-out</span><br></h3>
 Map having :leave as fn[context] and rewriting response body from map into json <br>
 ```clojure
@@ -19,4 +21,4 @@ Map having :leave as fn[context] and rewriting response body from map into json 
     #{["/status" :get (conj common-interceptors `r.status/get-status) :route-name :get-all-status]}))
 ```
 
-## Functions
+### Functions

@@ -16,7 +16,7 @@ A Clojure library designed to extend usual pedestal api setup, providing:
 ```
 
 ## Examples:
-[Read the docs](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/index.md)
+[Read the docs](doc/index.md)
 
 ## Publish
 ### Requirements
@@ -29,4 +29,4 @@ export GPG_TTY=$(tty) && lein deploy clojars
 ```
 
 ## Documentation
-[Link](https://github.com/majorcluster/pedestal-api-helper/tree/main/doc/index.md)
+[Link](doc/index.md)

@@ -1,11 +1,13 @@
-## Index
+## validation
+
+### Index
 - Definitions
   - [validation-def](#validation-def)
 - Symbols
 - Functions
   - [validate](#validate)
 
-## Definitions
+### Definitions
 Patterns for some maps passed to the functions as arguments:
 - <h3><a id='validation-def'></a><span style="color:coral">validation-def</span> ^map</h3><br>
 | key              | value                  | description                                              | mandatory extra key      | optional extra key                                                                 |
@@ -26,10 +28,10 @@ Patterns for some maps passed to the functions as arguments:
 ```
 
 
-## Symbols
+### Symbols
 
 
-## Functions
+### Functions
 
 - <h3><a id='validate'></a><span style="color:green">validate</span> [body fields]<br></h3>
   validates the body based on a map following [validation-def](#validation-def)<br>
