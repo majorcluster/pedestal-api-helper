@@ -13,7 +13,6 @@
   - [uuid](#uuid)
   - [uuid-as-string](#uuid-as-string)
   - [validate-and-mop!!](#validate-and-mop!!)
-  - [validate-mandatory](#validate-mandatory)
 
 ### Definitions
 Patterns for some maps passed to the functions as arguments:
@@ -21,9 +20,9 @@ Patterns for some maps passed to the functions as arguments:
 | key              | value                  | description                                              | mandatory extra key      | optional extra key                                                                 |
 | -----------------| -----------------------| -------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------- |
 | `:validate/type` | `:validate/mandatory`  | validates if field is present                            | -                        | `:validate/message` ^string with %s being field name                               |
-| `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value      |
-| `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value      |
-| `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name                               |
+| `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
+| `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
+| `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
 | `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name                               |
   - Examples:
   ```clojure
@@ -128,29 +127,4 @@ Patterns for some maps passed to the functions as arguments:
    ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
    ;                                               :validation-messages [{:field "age"
    ;                                                                      :message "Field age must have a minimum size of 18"}]}}
-```
-
-- <h3><a id='validate-mandatory'></a><span style="color:green">validate-mandatory</span> [body fields & message-untranslated = "Field %s is not present"]<br></h3>
-  checks if body map has mandatory keys, if not, throws an exception containing all missing fields in `ExceptionInfo` `.getData :validation-messages` <br>
-  <br>
-  - body ^uuid : uuid to be converted to string <br>
-  - fields [^string] : coll of strings being the mandatory keys for the body  <br>
-  - message-untranslated* ^string? : optional argument to customize message, used only when mandatory argument is coll of strings <br>
-  - returns ^boolean : true when validation succeeds <br>
-  - throws ^ExceptionInfo : exception info with data having bad format type and validation-messages for each field <br>
-```clojure
-    (validate-mandatory {:name "Rosa"} ["name"]) 
-    ;=> true
-```
-```clojure
-    (validate-mandatory {} ["name"]) 
-    ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
-    ;                                               :validation-messages [{:field "name"
-    ;                                                                      :message "Field :name is not present"}]}}
-```
-```clojure
-    (validate-mandatory {} ["name"] "Field %s has a custom message") 
-    ;=> ExceptionInfo thrown => ExceptionInfo{data {:type :bad-format
-    ;                                               :validation-messages [{:field "name"
-    ;                                                                      :message "Field :name has a custom message"}]}}
 ```
