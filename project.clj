@@ -1,4 +1,4 @@
-(defproject org.clojars.majorcluster/pedestal-api-helper "0.10.0"
+(defproject org.clojars.majorcluster/pedestal-api-helper "0.10.1"
   :description "Useful simple tools to be used for pedestal APIs"
   :url "https://github.com/majorcluster/pedestal-api-helper"
   :license {:name "The MIT License"

@@ -70,17 +70,18 @@
    (validate-regex body field-name validation-value "Field %s is not valid" igore-if-absent?)))
 
 (defn- validate-custom
-  ([body field-name validation-value raw-message _]
+  ([body field-name validation-value raw-message igore-if-absent?]
    (let [field-ks (keyword field-name)
          field-value (field-ks body)
-         valid? (validation-value field-value)]
+         valid? (or (is-absent-and-ignored body field-ks igore-if-absent?)
+                    (validation-value field-value))]
      (cond valid? {:validate/field field-name
                    :validate/valid true}
            :else {:validate/field field-name
                   :validate/result-message (format raw-message field-name),
                   :validate/valid false})))
-  ([body field-name validation-value _]
-   (validate-custom body field-name validation-value "Field %s is not valid" _)))
+  ([body field-name validation-value igore-if-absent?]
+   (validate-custom body field-name validation-value "Field %s is not valid" igore-if-absent?)))
 
 (defn- exec-validation-with-value
   [validation-fn body key validation-value raw-message igore-if-absent?]

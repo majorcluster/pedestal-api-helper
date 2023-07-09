@@ -133,13 +133,18 @@
     (is (validation/validate {:age 18} {"age" {:validate/type :validate/custom
                                                :validate/value (fn [value]
                                                                  (<= value 18))}}))
-    (is (thrown-match? ExceptionInfo
-                       {:type                :bad-format
-                        :validation-messages [{:field   "title"
-                                               :message "Field title is not valid"}]}
-                       (validation/validate {:title "Mafic Rock"} {"title" {:validate/type :validate/custom
-                                                                            :validate/value (fn [value]
-                                                                                              (= value "Sedimentary Rock"))}})))
+    (is (validation/validate {} {"age" {:validate/type :validate/custom
+                                        :validate/value string?
+                                        :validate/ignore-if-absent true}}))
+    (are [input specs] (thrown-match? ExceptionInfo
+                                      {:type                :bad-format
+                                       :validation-messages [{:field   "title"
+                                                              :message "Field title is not valid"}]}
+                                      (validation/validate input specs))
+                       {:title "Mafic Rock"} {"title" {:validate/type :validate/custom
+                                                       :validate/value number?}}
+                       {} {"title" {:validate/type :validate/custom
+                                    :validate/value string?}})
     (is (thrown-match? ExceptionInfo
                        {:type                :bad-format
                         :validation-messages [{:field   "title"

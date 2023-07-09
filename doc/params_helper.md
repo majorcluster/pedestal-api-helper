@@ -23,7 +23,7 @@ Patterns for some maps passed to the functions as arguments:
 | `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
 | `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
 | `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
-| `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name                               |
+| `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
   - Examples:
   ```clojure
     {"field-name"
