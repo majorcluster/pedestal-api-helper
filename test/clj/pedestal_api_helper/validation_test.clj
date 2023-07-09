@@ -141,10 +141,10 @@
                                        :validation-messages [{:field   "title"
                                                               :message "Field title is not valid"}]}
                                       (validation/validate input specs))
-                       {:title "Mafic Rock"} {"title" {:validate/type :validate/custom
-                                                       :validate/value number?}}
-                       {} {"title" {:validate/type :validate/custom
-                                    :validate/value string?}})
+      {:title "Mafic Rock"} {"title" {:validate/type :validate/custom
+                                      :validate/value number?}}
+      {} {"title" {:validate/type :validate/custom
+                   :validate/value string?}})
     (is (thrown-match? ExceptionInfo
                        {:type                :bad-format
                         :validation-messages [{:field   "title"
