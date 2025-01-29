@@ -126,6 +126,34 @@
                                                                              :validate/value #"[A-Za-z]{4}"
                                                                              :validate/message "Field %s is not valid in a custom fantastic message"}]}))))
 
+  (testing "regex-seq is validated"
+    (are [input specs] (validation/validate input specs)
+                       {:title "Rock"}       {"title" {:validate/type :validate/regex-seq
+                                                       :validate/value #"[A-Za-z]{4}"}}
+                       {:title "Mafic Rock"} {"title" {:validate/type :validate/regex-seq
+                                                       :validate/value #"[A-Za-z]{4}"}}
+                       {:age "18"}           {"age"   {:validate/type :validate/regex-seq
+                                                       :validate/value #"[1-9]{1,2}"}}
+                       {}                    {"age"   {:validate/type :validate/regex-seq
+                                                       :validate/value #"[1-9]{1,2}"
+                                                       :validate/ignore-if-absent true}})
+    (are [input specs] (thrown-match? ExceptionInfo
+                                      {:type                :bad-format
+                                       :validation-messages [{:field   "title"
+                                                              :message "Field title is not valid"}]}
+                                      (validation/validate input specs))
+                       {:title "Mafic"} {"title" {:validate/type :validate/regex-seq
+                                                  :validate/value #"^[A-Za-z]{4}$"}}
+                       {}               {"title" [{:validate/type :validate/regex-seq
+                                                   :validate/value #"[A-Za-z]{4}"}]})
+    (is (thrown-match? ExceptionInfo
+                       {:type                :bad-format
+                        :validation-messages [{:field   "title"
+                                               :message "Field title is not valid in a custom fantastic message"}]}
+                       (validation/validate {:title "Mafic Rock"} {"title" [{:validate/type :validate/regex-seq
+                                                                             :validate/value #"^[A-Za-z]{4}$"
+                                                                             :validate/message "Field %s is not valid in a custom fantastic message"}]}))))
+
   (testing "custom is validated"
     (is (validation/validate {:title "Rock"} {"title" {:validate/type :validate/custom
                                                        :validate/value (fn [value]

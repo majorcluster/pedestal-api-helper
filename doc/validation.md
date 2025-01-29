@@ -16,6 +16,7 @@ Patterns for some maps passed to the functions as arguments:
   | `:validate/type` | `:validate/max`        | validates if max is not reached                          | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being max value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
   | `:validate/type` | `:validate/min`        | validates if at least min value is reached               | `:validate/value` ˆint   | `:validate/message` ^string with 1st %s being field name, 2nd being min value <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field |
   | `:validate/type` | `:validate/regex`      | validates if string matches regex pattern                | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
+  | `:validate/type` | `:validate/regex-seq`  | validates if string contains regex pattern               | `:validate/value` ˆregex | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
   | `:validate/type` | `:validate/custom`     | validates if custom fn receiving the value returns true  | `:validate/value` ^fn    | `:validate/message` ^string with %s being field name <br>`:validate/ignore-if-absent` ^boolean to ignore validation for absent field                                |
     - Examples:
 ```clojure
@@ -24,6 +25,7 @@ Patterns for some maps passed to the functions as arguments:
          {:validate/type :validate/min, :validate/value 12, :validate/message "%s is mandatory"},
          {:validate/type :validate/max, :validate/value 40, :validate/message "%s is ..."},
          {:validate/type :validate/regex, :validate/value #"^[\d]{1,2}$", :validate/message "%s is ..."},
+         {:validate/type :validate/regex-seq, :validate/value #"[\d]{1,2}", :validate/message "%s is ..."},
          {:validate/type :validate/custom, :validate/value fn, :validate/message "% is ..."}]}
 ```
 

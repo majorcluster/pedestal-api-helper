@@ -69,6 +69,21 @@
   ([body field-name validation-value igore-if-absent?]
    (validate-regex body field-name validation-value "Field %s is not valid" igore-if-absent?)))
 
+(defn- validate-regex-seq
+  ([body field-name validation-value raw-message igore-if-absent?]
+   (let [field-ks (keyword field-name)
+         field-value (field-ks body)
+         valid? (cond (is-absent-and-ignored body field-ks igore-if-absent?) true
+                      (string? field-value) (re-seq validation-value field-value)
+                      :else false)]
+     (cond valid? {:validate/field field-name
+                   :validate/valid true}
+           :else {:validate/field field-name
+                  :validate/result-message (format raw-message field-name),
+                  :validate/valid false})))
+  ([body field-name validation-value igore-if-absent?]
+   (validate-regex-seq body field-name validation-value "Field %s is not valid" igore-if-absent?)))
+
 (defn- validate-custom
   ([body field-name validation-value raw-message igore-if-absent?]
    (let [field-ks (keyword field-name)
@@ -103,6 +118,7 @@
           (= type :validate/min)        (exec-validation-with-value validate-min body key validation-value raw-message igore-if-absent?)
           (= type :validate/max)        (exec-validation-with-value validate-max body key validation-value raw-message igore-if-absent?)
           (= type :validate/regex)      (exec-validation-with-value validate-regex body key validation-value raw-message igore-if-absent?)
+          (= type :validate/regex-seq)  (exec-validation-with-value validate-regex-seq body key validation-value raw-message igore-if-absent?)
           (= type :validate/custom)     (exec-validation-with-value validate-custom body key validation-value raw-message igore-if-absent?)
           :else true)))
 
